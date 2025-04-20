@@ -2,24 +2,22 @@
 
 ## AUTHORING
 - **Name:** Michael Greene
-- **Class:** CMSC 313 - Spring 2025
-- **Date:** April 16, 2025
+- **Class:** CMSC 313 - Spring 2025 - Mo/We - 10:00-11:15am
+- **Date:** April 18, 2025
 
 ## PURPOSE OF SOFTWARE
-This project implements a matrix manipulation library in both **C++** and **C**. The library supports basic matrix operations including:
+This project implements a matrix manipulation library in both **C++** and **C**. The library supports basic matrix operations such as:
 - Matrix addition
 - Scalar multiplication
 - Matrix multiplication
 - Matrix transpose
-
-The goal is to provide both an object-oriented (C++) and procedural (C99) implementation suitable for an x86 architecture, compiled using `gcc`.
 
 ## FILES
 
 ### C++ Version
 - `C++matrix.cpp` — C++ implementation of the `Matrix` class
 - `C++matrix.h` — Header file for the C++ Matrix class
-- `C++main.cpp` — Test program that performs the matrix operation `D = A + (3 * B) * Cᵀ`
+- `C++main.cpp` — Test program that performs the matrix operation `D = A + (3 * B) * C^T`
 
 ### C Version
 - `Cmatrix.c` — C implementation of the matrix functions using a `struct Matrix`
@@ -31,13 +29,8 @@ The goal is to provide both an object-oriented (C++) and procedural (C99) implem
 
 ## BUILD INSTRUCTIONS
 
-### Using CLion (Recommended)
-1. Open the `Homework 8` directory in CLion as a project.
-2. CLion will auto-detect the `CMakeLists.txt` file.
-3. Use the top-right dropdown to select either:
-    - `matrix_cpp` — to run the C++ version
-    - `matrix_c` — to run the C version
-4. Click **Run** ▶️ or **Build → Build Project**
+### Using CLion
+It will automatically detect the CMakeLists.txt and provide executables for both C++ and C versions of main
 
 ### Using Terminal (x86 Linux/GCC)
 ```bash
