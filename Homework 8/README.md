@@ -39,3 +39,7 @@ g++ -std=c++14 C++matrix.cpp C++main.cpp -o matrix_cpp
 
 # For C
 gcc -std=c99 Cmatrix.c Cmain.c -o matrix_c
+```
+
+## Expected Output
+![Matrix Output](C++Matrix_Output.png)
