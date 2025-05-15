@@ -12,46 +12,48 @@ section .text
     global _start
 
 _start:
-    mov esi, inputBuf   ; ESI = source pointer
-    mov edi, outputBuf  ; EDI = destination pointer
-    mov ecx, inputLen   ; Number of bytes to translate
+    mov esi, inputBuf   ; Set ESI to point to the input byte buffer
+    mov edi, outputBuf  ; Set EDI to point to the output character buffer
+    mov ecx, inputLen   ; Set loop counter to number of bytes to translate
 
 translate_loop:
-    lodsb   ; Load byte from [ESI] into AL, advance ESI
-    push ecx    ; Save loop counter
+    lodsb   ; Load next byte into AL and advance ESI
+    push ecx    ; Preserve loop counter across subroutine call
 
-    ; Convert byte to 2-digit hex
-    movzx ecx, al   ; Move byte to ecx
-    call byteToHex  ; Translates byte in CL, result in [EDI]
+    ; Translate the byte into two ASCII hex characters
+    ; Writes result directly into [EDI]
+    movzx ecx, al   ; Move byte into ECX for subroutine
+    call byteToHex
 
-    add edi, 2      ; Advance output buffer by 2 bytes
+    add edi, 2      ; Advance output position for 2 hex digits
     mov byte [edi], ' '     ; Add space
     inc edi
 
-    pop ecx
+    pop ecx         ; Restore loop counter
     loop translate_loop
 
-    ; Replace last space with newline
+    ; Overwrite last space with newline
     dec edi
     mov byte [edi], 10
 
-    ; Print buffer to stdout (sys_write)
-    mov eax, 4      ; sys_write
-    mov ebx, 1      ; stdout
-    mov ecx, outputBuf      ; buffer
+    ; System call to print outputBuf to stdout
+    mov eax, 4      
+    mov ebx, 1
+    mov ecx, outputBuf
     mov edx, edi
     sub edx, outputBuf      ; length = edi - outputBuf
     int 0x80
 
-    ; Exit
-    mov eax, 1      ; sys_exit
+    ; Exit the program
+    mov eax, 1
     xor ebx, ebx
     int 0x80
 
 ; -------------------------
 ; byteToHex:
-; Input: CL = byte to convert 
-; Output: writes 2 ASCII chars at [EDI]
+; Takes a byte in CL
+; Translates it to 2 ASCII hex digits (high and low nibble)
+; Stores result in [EDI] and [EDI+1]
 ; -------------------------
 
 byteToHex:
@@ -73,8 +75,9 @@ byteToHex:
 
 ; ------------------------
 ; nibbleToAscii:
-; Input: AL = 4-bit nibble 
-; Output: AL = ASCII character of hex digit
+; Converts a 4-bit nibble in AL to its ASCII hex character
+; If nibble < 10, it returns '0'-'9'
+; If nibble >= 10, it returns 'A'-'F'
 ; ------------------------
 
 nibbleToAscii:
