@@ -48,3 +48,40 @@ translate_loop:
     xor ebx, ebx
     int 0x80
 
+; -------------------------
+; byteToHex:
+; Input: CL = byte to convert 
+; Output: writes 2 ASCII chars at [EDI]
+; -------------------------
+
+byteToHex:
+    push eax
+    push ebx
+    mov al, cl 
+    shr al, 4
+    call nibbleToAscii
+    mov [edi], al 
+
+    mov al, cl 
+    and al, 0x0F
+    call nibbleToAscii
+    mov [edi+1], al
+
+    pop ebx 
+    pop eax
+    ret 
+
+; ------------------------
+; nibbleToAscii:
+; Input: AL = 4-bit nibble 
+; Output: AL = ASCII character of hex digit
+; ------------------------
+
+nibbleToAscii:
+    cmp al, 9
+    jbe .is_digit
+    add al, 0x37    ; 'A' - 10 = 65 - 10 = 55
+    ret 
+.is_digit:
+    add al, '0'
+    ret
