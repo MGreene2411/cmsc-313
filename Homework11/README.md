@@ -14,3 +14,8 @@ Make sure you're using a 32-bit system or compiling with 32-bit support:
 ```bash
 nasm -f elf32 -o hw11.o hw11.asm
 ld -m elf-i386 -o hw11 hw11.o
+```
+
+### 2. Run the Program
+```bash
+./hw11
