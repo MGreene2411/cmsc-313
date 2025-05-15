@@ -35,6 +35,7 @@ translate_loop:
     ; Overwrite last space with newline
     dec edi
     mov byte [edi], 10
+    inc edi
 
     ; System call to print outputBuf to stdout
     mov eax, 4      
